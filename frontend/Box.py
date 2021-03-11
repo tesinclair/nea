@@ -25,7 +25,7 @@ class Box(object):
        self.unactive_color = (0,0,0)
        self.active_color = (100,100,100)
        self.update_text = self.text # This value will be used to change the text
-       
+
 
 
     def update(self):
@@ -59,5 +59,3 @@ class EnglishInputBox(Box):
 class DrawBox(Box):
     def handle_event(self, event):
         pass
-
-

@@ -1,2 +1,2 @@
-from .database_model import *
+from .DatabaseHandler import *
 from .OCR import *

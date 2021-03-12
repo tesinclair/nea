@@ -1,5 +1,9 @@
-#External Package Imports
+# External Package Imports
 import pygame
+
+# Initialise pygame
+
+pygame.init()
 
 # Global Constants
 
@@ -17,10 +21,9 @@ class Box(object):
     TEXT_SIZE = 20 # Denotes the text size
 
     # This creates a font which can be used to blit text to the screen
-
     BOX_FONT_TEXTBOX = pygame.font.Font("../dependencies/chrysuni.ttf", TEXT_SIZE)
 
-    def __init__(self, screen, pos: Tuple, dim: Tuple, text=""):
+    def __init__(self, screen, pos: tuple, dim: tuple, text=""):
        
         # Initializing Cusomizable values
 
@@ -48,7 +51,7 @@ class Box(object):
             # Variables
 
         self.color = (0,0,0)
-        self.update_text = self.text # This value will be used to change the text
+        self.update_text = text # This value will be used to change the text
         self.rect = pygame.Rect(pos[0], pos[1], dim[0], dim[1])
 
     # To be called once per frame.
@@ -63,7 +66,7 @@ class Box(object):
         pygame.draw.rect(self.screen, self.color, self.rect, 1)
 
         self.screen.blit((
-            BOX_FONT_TEXTBOX.render(
+            self.BOX_FONT_TEXTBOX.render(
                 self.text, True, TEXT_COLOR, TEXT_COLOR_FILL
             )), text_position
         )
@@ -72,10 +75,8 @@ class Box(object):
     # Simply performs any tasks intended to be done once
 
     def draw(self):
-
         # Draws the first box, 
         # This is done here to stop the screen from loading blank
-
         text_position = (
             self.rect.x + self.TEXT_SPACING[0], 
             self.rect.y + self.TEXT_SPACING[1]
@@ -83,7 +84,7 @@ class Box(object):
 
         pygame.draw.rect(self.screen, self.color, self.rect, 1)
         self.screen.blit((
-            BOX_FONT_TEXTBOX.render(
+            self.BOX_FONT_TEXTBOX.render(
                 self.text, True, TEXT_COLOR, TEXT_COLOR_FILL
             )), text_position
         )
@@ -109,7 +110,7 @@ class JapaneseInputBox(Box):
 # used for User Inputs In English
 
 class EnglishInputBox(Box):
-    def __init__(self, screen, pos: Tuple, dim: Tuple, text="", type = "text"):
+    def __init__(self, screen, pos: tuple, dim: tuple, text="", type = "text"):
         super().__init__(screen, pos, dim, text="")
         self.type = type
 

@@ -21,15 +21,15 @@ def setup_login(screen, dim: tuple):
 
     # Gets Dimensions
 
-    height = dim[0]
-    width = dim[1]
+    height = dim[1]
+    width = dim[0]
 
     # Username Box
 
     username_box_login = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (30,60), 
-        (math.floor(height/4), math.floor(width/6)), 
+        (math.floor(width/4), math.floor(height/3)), 
+        (200,30), 
         text="Username..."
         )
 
@@ -37,8 +37,8 @@ def setup_login(screen, dim: tuple):
 
     password_box_login = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (30,60), 
-        (math.floor(height/4) + username_box_login.get_dim()[0] + BOX_SPACING, 100), 
+        (math.floor(width/4), math.floor(height/3) + 60), 
+        (200,30), 
         text="Password...",
         type="password"
         )

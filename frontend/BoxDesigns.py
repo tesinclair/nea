@@ -37,8 +37,8 @@ class Box(object):
 
         # Getting the dimentions (dim) of the box
 
-        self.height = dim[0]
-        self.width = dim[1]
+        self.height = dim[1]
+        self.width = dim[0]
 
         #Initializing values
 
@@ -52,7 +52,7 @@ class Box(object):
 
         self.color = (0,0,0)
         self.update_text = text # This value will be used to change the text
-        self.rect = pygame.Rect(pos[0], pos[1], dim[0], dim[1])
+        self.rect = pygame.Rect(pos[0], pos[1], dim[1], dim[0])
 
     # To be called once per frame.
 

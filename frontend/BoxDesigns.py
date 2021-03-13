@@ -48,13 +48,13 @@ class Box(object):
 
             # Constants
 
-        self.UNACTIVE_COLOR = (0,0,0) # Colour 
-        self.ACTIVE_COLOR = (100,100,100)
-        self.TEXT_SPACING = (9,7)
+        self.UNACTIVE_COLOR = (0,0,0) # Colour when there is no box event
+        self.ACTIVE_COLOR = (100,100,100) # Colour when there is a box event
+        self.TEXT_SPACING = (9,7) # Spacing between text and walls of rect
 
             # Variables
 
-        self.color = (0,0,0)
+        self.color = (0,0,0) # The color that is referenced in renders, changes on event to constants above 
         self.update_text = text # This value will be used to change the text
         self.rect = pygame.Rect(pos[0], pos[1], dim[1], dim[0]) # Creates a pygame shell of a rectangle 
 
@@ -64,16 +64,15 @@ class Box(object):
         text_position = (
             self.x + self.TEXT_SPACING[0], 
             self.y + self.TEXT_SPACING[1]
-            )
+            ) # Defining the text position to keep it withing the rectandgle
 
-        self.rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        pygame.draw.rect(self.screen, self.color, self.rect, 1)
-
+        self.rect = pygame.Rect(self.x, self.y, self.width, self.height) # Redefines the rect for new x, y, width, and height. As they may change
+        pygame.draw.rect(self.screen, self.color, self.rect, 1) # Draws the rectangle to the screen
         self.screen.blit((
             self.BOX_FONT_TEXTBOX.render(
                 self.text, True, TEXT_COLOR, TEXT_COLOR_FILL
             )), text_position
-        )
+        ) # Adds text to the screen
 
     # To be called once. 
     # Simply performs any tasks intended to be done once
@@ -115,7 +114,7 @@ class JapaneseInputBox(Box):
 
 class EnglishInputBox(Box):
     def __init__(self, screen, pos: tuple, dim: tuple, text="", type = "text"):
-        super().__init__(screen, pos, dim, text="")
+        super().__init__(screen, pos, dim, text=text)
         self.type = type
 
     def handle_event(self, event):

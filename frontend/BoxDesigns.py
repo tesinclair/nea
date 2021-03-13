@@ -58,6 +58,7 @@ class Box(object):
         self.color = (0,0,0) # The color that is referenced in renders, changes on event to constants above 
         self.update_text = text # This value will be used to change the text
         self.rect = pygame.Rect(pos[0], pos[1], dim[1], dim[0]) # Creates a pygame shell of a rectangle 
+        self.box_contents = "" # Used for returning the password and username 
 
     # To be called once per frame.
 
@@ -94,6 +95,8 @@ class Box(object):
         )
 
     def get_dim(self): return (self.y, self.x)
+
+    def get_text(self): return self.box_contents
 
 # Child Input Box, 
 # used for User Inputs In Japanese
@@ -138,6 +141,7 @@ class EnglishInputBox(Box):
             if self.color == self.ACTIVE_COLOR:
                 if event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1] # Removes that last index
+                    self.box_contents = self.box_contents[:-1]
 
                 elif event.key == pygame.K_RETURN:
                     # If the user pressed return, we don't want anything to happen, 
@@ -149,12 +153,10 @@ class EnglishInputBox(Box):
                     # Checks if the box type is password
                     if self.type == "password":
                         self.text += "*" # Adds an astrisk, so password cannot be seen
+                        self.box_contents += event.unicode
                     else:
                         self.text += event.unicode
-
-
-        
-
+                        self.box_contents += event.unicode
         
 
 # Child Draw Box, 

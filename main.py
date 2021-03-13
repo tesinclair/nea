@@ -3,19 +3,15 @@ import pygame
 import sys
 import os
 import math
-from dotenv import load_dotenv
 
 # Local Imports
 import frontend
 import backend
+import dependencies
 
-# Initializing the env file
+# Initializing settings
 
-load_dotenv()
-
-# Initializing pygame
-
-pygame.init()
+dependencies.settings.init()
 
 # Global Constants
 
@@ -56,7 +52,7 @@ class LoginContainer:
 
     @classmethod
     def draw_login_text(cls):
-        FONT_TEXTBOX = pygame.font.Font("/dependencies/chrysuni.ttf", 30)
+        FONT_TEXTBOX = pygame.font.Font(os.getenv("FONT_PATH"), 30)
 
         screen.blit((
             FONT_TEXTBOX.render(
@@ -64,7 +60,7 @@ class LoginContainer:
                 True, 
                 (0,0,100),
                 (255,255,255) 
-            )), (math.floor(LOGIN_DIMENSIONS[0]/2) - 50, math.floor(LOGIN_DIMENSIONS[1]/6))
+            )), (math.floor(LOGIN_DIMENSIONS[0]/2) - 40, math.floor(LOGIN_DIMENSIONS[1]/6))
         )
 
 # Main Script

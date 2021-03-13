@@ -1,20 +1,25 @@
 # External Imports
 import pygame
 import math
+import os
 
 # Local Imports
+
+import dependencies
 import frontend
 
-# Initialise pygame
+# Initialization of settings
 
-pygame.init()
+dependencies.settings.init()
+
+# Instantiates all the login class variables
 
 def setup_login(screen, dim: tuple):
     # Constant Values
 
     BOX_SPACING = 10
     SIZE = 30
-    FONT_TEXTBOX = pygame.font.Font("../dependencies/chrysuni.ttf", SIZE)
+    FONT_TEXTBOX = pygame.font.Font(os.getenv("FONT_PATH"), SIZE)
     LOGIN_TEXT_COLOR = (0,0,55)
     TEXT_BG_COLOR = (255,255,255)
 

@@ -1,9 +1,13 @@
 # External Package Imports
 import pygame
+import os
 
-# Initialise pygame
+# Local Package Imports
+import dependencies
 
-pygame.init()
+# Initialization of settings
+
+dependencies.settings.init()
 
 # Global Constants
 
@@ -21,7 +25,7 @@ class Box(object):
     TEXT_SIZE = 20 # Denotes the text size
 
     # This creates a font which can be used to blit text to the screen
-    BOX_FONT_TEXTBOX = pygame.font.Font("../dependencies/chrysuni.ttf", TEXT_SIZE)
+    BOX_FONT_TEXTBOX = pygame.font.Font(os.getenv("FONT_PATH"), TEXT_SIZE)
 
     def __init__(self, screen, pos: tuple, dim: tuple, text=""):
        
@@ -44,7 +48,7 @@ class Box(object):
 
             # Constants
 
-        self.UNACTIVE_COLOR = (0,0,0)
+        self.UNACTIVE_COLOR = (0,0,0) # Colour 
         self.ACTIVE_COLOR = (100,100,100)
         self.TEXT_SPACING = (9,7)
 
@@ -52,7 +56,7 @@ class Box(object):
 
         self.color = (0,0,0)
         self.update_text = text # This value will be used to change the text
-        self.rect = pygame.Rect(pos[0], pos[1], dim[1], dim[0])
+        self.rect = pygame.Rect(pos[0], pos[1], dim[1], dim[0]) # Creates a pygame shell of a rectangle 
 
     # To be called once per frame.
 

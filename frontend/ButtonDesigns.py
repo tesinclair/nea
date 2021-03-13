@@ -11,7 +11,6 @@ dependencies.settings.init()
 
 # Global Constants
 
-TEXT_COLOR = (0,0,0)
 TEXT_COLOR_FILL = (255,255,255)
 
 
@@ -75,7 +74,7 @@ class Button(object):
         pygame.draw.rect(self.screen, self.color, self.rect, 1) # Draws the rectangle to the screen
         self.screen.blit((
             self.BOX_FONT_TEXTBOX.render(
-                self.text, True, TEXT_COLOR, TEXT_COLOR_FILL
+                self.text, True, self.color, TEXT_COLOR_FILL
             )), text_position
         ) # Adds text to the screen
 
@@ -93,10 +92,20 @@ class Button(object):
         pygame.draw.rect(self.screen, self.color, self.rect, 1)
         self.screen.blit((
             self.BOX_FONT_TEXTBOX.render(
-                self.text, True, TEXT_COLOR, TEXT_COLOR_FILL
+                self.text, True, self.color, TEXT_COLOR_FILL
             )), text_position
         )
 
 class LoginButton(Button):
     def handle_event(self, event):
+        if event.type == pygame.MOUSEMOTION:
+
+            # If the user is hovering over the button
+            if self.rect.collidepoint(event.pos):
+                self.color = self.ACTIVE_COLOR
+            else:
+                self.color = self.UNACTIVE_COLOR
         
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.color = self.ACTIVE_COLOR:
+                 

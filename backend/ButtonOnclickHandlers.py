@@ -8,5 +8,6 @@ import backend
 def login_button_backend_handler(username, password):
     # If the username exists
     if backend.DatabaseHandler.get_exists(username):
-        return True
+        if backend.DatabaseHandler.check_password(username, password):
+            return True
     return False

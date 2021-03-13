@@ -78,18 +78,40 @@ class LoginContainer:
          # Sends the event handler the event
         cls.password_login_box.handle_event(event)
         cls.username_login_box.handle_event(event)
-        cls.button_create_account.handle_event(event)
-        cls.button_login.handle_event(
+        if cls.button_create_account.handle_event(event):
+            login_form = False
+            create_account_form = True
+
+        if cls.button_login.handle_event(
             event, 
             cls.username_login_box.get_text(), 
             cls.password_login_box.get_text()
-        )
+        ):
+
+            user = cls.button_login.handle_event(
+            event, 
+            cls.username_login_box.get_text(), 
+            cls.password_login_box.get_text()
+            )
+            login_form = False
+            app_form = True
+
 
 class CreateAccountContainer:
-    pass
+    @classmethod
+    def setup_login(cls):
+
+        # Calls a setup function
+        cls.username_login_box, cls.password_login_box, cls.button_login, cls.button_create_account = frontend.InstantiateFrontend.setup_login(screen, LOGIN_DIMENSIONS)
+
 
 class AppContainer:
-    pass
+    @classmethod
+    def setup_login(cls):
+
+        # Calls a setup function
+        cls.username_login_box, cls.password_login_box, cls.button_login, cls.button_create_account = frontend.InstantiateFrontend.setup_login(screen, LOGIN_DIMENSIONS)
+
 
 # Main Script
 
@@ -98,6 +120,17 @@ def main():
         LoginContainer.setup_login()
         LoginContainer.draw_login()
         pygame.display.flip()
+    
+    elif create_account_form:
+        CreateAccountContainer.setup_login()
+        CreateAccountContainer.draw_login()
+        pygame.display.flip()
+
+    elif app_form:
+        AppContainer.setup_login()
+        AppContainer.draw_login()
+        pygame.display.flip()
+
     while True:
 
         # If the user is on the login form (True by default)

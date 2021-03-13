@@ -4,6 +4,7 @@ import sqlite3
 from sqlite3 import Error
 import os
 import pygame
+import hashlib
 
 
 # Local Imports
@@ -17,12 +18,13 @@ dependencies.settings.init()
 
 
 # Constants
-CONN = sqlite3.connect("../nea_database.db") # Establishes connection with database
+CONN = sqlite3.connect("./nea_database.db") # Establishes connection with database
 CURSOR = CONN.cursor()
 
-def execute_command(command):
+def execute_command(command, data=[]):
     try:
-        CURSOR.execute(command)
+        if len(CURSOR.execute(command, data).fetchall()) > 0:
+            return CURSOR.execute(command, data).fetchall()
     except Error as e: print(e) # If command cannot be executed, print why
 
 
@@ -73,35 +75,50 @@ def create_tables():
 
 def add_account(f_name, s_name, password, username):
     password_to_add = hash_pass(password)
-    command = f"""
-    INSERT INTO 'users' (f_name, s_name, pass, username)
-    values('{f_name}', '{s_name}', '{password_to_add}', '{username}');"""
-    execute_command(command)
+    command = r"""
+    INSERT INTO `users` (f_name, s_name, pass, username)
+    values(?, ?, ?, ?);
+    """
+    execute_command(command, [f_name, s_name, password, username])
 
 def get_exists(username):
-    command = """
-    SELECT 'username' FROM 'users' WHERE 'username' = '{username}';
+    command = r"""
+    SELECT `username` FROM `users` WHERE `username` = ?;
     """
-    result = execute_command(command)
+    result = execute_command(command, [username])
     if result:
         return True
     else:
         return False
 
 
-def check_password(pass_to_check, username):
+def check_password(username, pass_to_check):
     hashed_pass_to_check = hash_pass(pass_to_check)
-    command = """
-    SELECT * FROM 'users' WHERE 'username' = '{username}' AND 'pass' = '{hashed_pass_to_check}';
+    command = r"""
+    SELECT * FROM `users` WHERE `username` = ? AND `pass` = ?;
     """
-    if execute_command(command): return True
-    else: return False
+    result = execute_command(command, [username, pass_to_check])
+    if result: 
+        return True
+    else: 
+        return False
 
-# def get_id(username):
-#     command = """
-#     SELECT 'user_id' FROM 'users' WHERE 'username' = '{username}';
-#     """
-#     return execute_command(CONN, command)
+def get_id(username):
+    command = """
+    SELECT `id` FROM `users` WHERE `username` = ?;
+    """
+    return execute_command(command, [username])
+
+def get_name(username):
+    command_f_name = '''
+    SELECT `f_name` FROM `users` WHERE `username` = ?;
+    '''
+    command_s_name = '''
+    SELECT `s_name` FROM `users` WHERE `username` = ?;
+    '''
+    f_name = execute_command(command_f_name, [username])
+    s_name = execute_command(command_s_name, [username])
+    return f_name, s_name
 
 def hash_pass(password: str):
     return hashlib.sha224(password.encode("UTF-8")).hexdigest()

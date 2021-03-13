@@ -5,6 +5,7 @@ import os
 # Local Package Imports
 import dependencies
 import backend
+import frontend
 
 # Initialization of settings
 
@@ -113,13 +114,21 @@ class LoginButton(Button):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.color == self.ACTIVE_COLOR:
                 # Runs a backend script which handles the database work
-                print(backend.ButtonOnclickHandlers.login_button_backend_handler(username, password))
+                if backend.ButtonOnclickHandlers.login_button_backend_handler(username, password):
+                    user_id = backend.DatabaseHandler.get_id(username)[0][0]
+                    f_name, s_name = backend.DatabaseHandler.get_name(username)
+                    user = frontend.UserData.User(username, user_id, f_name[0][0], s_name[0][0])
+                    return user
                 
-class CreateAccountButton(Button):
+class CreateAccountFormButton(Button):
     def handle_event(self, event):
         self.onHoverCheck(event)
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.color == self.ACTIVE_COLOR:
                 # Change to create account form
-                pass
+                return True
+
+class CreateAccountButton(Button):
+    def handle_event(self, event):
+        self.onHoverCheck(event)

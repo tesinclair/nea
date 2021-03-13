@@ -4,6 +4,7 @@ import os
 
 # Local Package Imports
 import dependencies
+import backend
 
 # Initialization of settings
 
@@ -97,7 +98,7 @@ class Button(object):
         )
 
 class LoginButton(Button):
-    def handle_event(self, event):
+    def handle_event(self, event, username, password):
         if event.type == pygame.MOUSEMOTION:
 
             # If the user is hovering over the button
@@ -107,5 +108,11 @@ class LoginButton(Button):
                 self.color = self.UNACTIVE_COLOR
         
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.color = self.ACTIVE_COLOR:
-                 
+            if self.color == self.ACTIVE_COLOR:
+
+                # Runs a backend script which handles the database work
+                backend.ButtonOnclickHandlers.login_button_backend_handler(username, password)
+                
+class CreateAccountButton(Button):
+    def handle_event(self, event):
+        pass

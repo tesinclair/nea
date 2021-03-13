@@ -73,7 +73,11 @@ class LoginContainer:
          # Sends the event handler the event
         cls.password_login_box.handle_event(event)
         cls.username_login_box.handle_event(event)
-        cls.button_login.handle_event(event)
+        cls.button_login.handle_event(
+            event, 
+            cls.username_login_box.get_text(), 
+            cls.password_login_box.get_text()
+        )
 
 # Main Script
 

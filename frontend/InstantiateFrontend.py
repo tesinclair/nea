@@ -56,7 +56,16 @@ def setup_login(screen, dim: tuple):
         (60,30),
         text="Login"
     )
+
+    # Create Account Button
+
+    button_create_account = frontend.ButtonDesigns.CreateAccountButton(
+        screen, 
+        (math.floor(1*width/3) - 10, math.floor(5*height/6)),
+        (145,30),
+        text="Create Account"
+    )
     
     # Returns the instances
 
-    return username_box_login, password_box_login, button_login
+    return username_box_login, password_box_login, button_login, button_create_account

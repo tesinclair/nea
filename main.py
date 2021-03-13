@@ -33,7 +33,7 @@ class LoginContainer:
     def setup_login(cls):
 
         # Calls a setup function
-        cls.username_login_box, cls.password_login_box, cls.button_login = frontend.InstantiateFrontend.setup_login(screen, LOGIN_DIMENSIONS)
+        cls.username_login_box, cls.password_login_box, cls.button_login, cls.button_create_account = frontend.InstantiateFrontend.setup_login(screen, LOGIN_DIMENSIONS)
 
     @classmethod
     def draw_login_text(cls):
@@ -55,6 +55,7 @@ class LoginContainer:
         cls.username_login_box.draw()
         cls.password_login_box.draw()
         cls.button_login.draw()
+        cls.button_create_account.draw()
 
     @classmethod
     def run_login(cls):
@@ -63,6 +64,7 @@ class LoginContainer:
         cls.username_login_box.update()
         cls.password_login_box.update()
         cls.button_login.update()
+        cls.button_create_account.update()
 
     # I'd have liked to put this inside InstantiateFrontend, 
     # but it wouuld be bad to call an instantiation function as an update function...
@@ -73,6 +75,7 @@ class LoginContainer:
          # Sends the event handler the event
         cls.password_login_box.handle_event(event)
         cls.username_login_box.handle_event(event)
+        cls.button_create_account.handle_event(event)
         cls.button_login.handle_event(
             event, 
             cls.username_login_box.get_text(), 

@@ -96,17 +96,20 @@ class Button(object):
                 self.text, True, self.color, TEXT_COLOR_FILL
             )), text_position
         )
-
-class LoginButton(Button):
-    def handle_event(self, event, username, password):
+    
+    def onHoverCheck(self, event):
         if event.type == pygame.MOUSEMOTION:
-
+    
             # If the user is hovering over the button
             if self.rect.collidepoint(event.pos):
                 self.color = self.ACTIVE_COLOR
             else:
                 self.color = self.UNACTIVE_COLOR
-        
+
+class LoginButton(Button):
+    def handle_event(self, event, username, password):
+        self.onHoverCheck(event)
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.color == self.ACTIVE_COLOR:
 
@@ -115,4 +118,4 @@ class LoginButton(Button):
                 
 class CreateAccountButton(Button):
     def handle_event(self, event):
-        pass
+        self.onHoverCheck(event)

@@ -45,9 +45,18 @@ def setup_login(screen, dim: tuple):
         (math.floor(width/4), math.floor(height/3) + 60), 
         (200,30), 
         text="Password...",
-        type="password"
+        box_type="password"
         )
+
+    # Login Button
+
+    button_login = frontend.ButtonDesigns.LoginButton(
+        screen, 
+        (math.floor(width/2) - 40, math.floor(5*height/9) - 20),
+        (60,30),
+        text="Login"
+    )
     
     # Returns the instances
 
-    return username_box_login, password_box_login
+    return username_box_login, password_box_login, button_login

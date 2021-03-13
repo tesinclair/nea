@@ -15,11 +15,17 @@ TEXT_COLOR = (0,0,0)
 TEXT_COLOR_FILL = (255,255,255)
 
 
-# This class simply draws the box, 
+# This class simply draws the button, 
 # children will handle their own events
 
-class Box(object):
-
+'''
+Code is very similar to the Box class in box designs
+Since, on a soley frontend level, a Button is effectively 
+a less versitile box. As such this class is mostly the
+Box skeleton, but with fewer variables 
+'''
+class Button(object):
+    
     # Local Box Variables
 
     TEXT_SIZE = 25 # Denotes the text size
@@ -51,12 +57,10 @@ class Box(object):
         self.UNACTIVE_COLOR = (0,0,0) # Colour when there is no box event
         self.ACTIVE_COLOR = (100,100,100) # Colour when there is a box event
         self.TEXT_SPACING = (9,7) # Spacing between text and walls of rect
-        self.ORIGINAL_TEXT = self.text # Used so that any box text canbe removed and replaces
 
             # Variables
 
         self.color = (0,0,0) # The color that is referenced in renders, changes on event to constants above 
-        self.update_text = text # This value will be used to change the text
         self.rect = pygame.Rect(pos[0], pos[1], dim[1], dim[0]) # Creates a pygame shell of a rectangle 
 
     # To be called once per frame.
@@ -93,73 +97,6 @@ class Box(object):
             )), text_position
         )
 
-    def get_dim(self): return (self.y, self.x)
-
-# Child Input Box, 
-# used for User Inputs In Japanese
-
-class JapaneseInputBox(Box):
-
-    '''
-    While event handling isn't strictly frontend, 
-    this directly effects the frontend in such a 
-    way that encorparating it into the frontend was
-    the only efficient solution.
-    '''
-
+class LoginButton(Button):
     def handle_event(self, event):
-        pass
-
-# Child Input Box, 
-# used for User Inputs In English
-
-class EnglishInputBox(Box):
-    def __init__(self, screen, pos: tuple, dim: tuple, text="", box_type = "text"):
-        super().__init__(screen, pos, dim, text=text)
-        self.type = box_type
-
-    def handle_event(self, event):
-        # This will change whether the box is active or not
-        if event.type == pygame.MOUSEBUTTONDOWN:
-
-            # If collision is inside the rectangle
-            if self.rect.collidepoint(event.pos):
-                if self.text == self.ORIGINAL_TEXT: self.text = ""  # If the text is original
-                self.color = self.ACTIVE_COLOR
-
-            # If User clicked outside the rect
-            else:
-                if self.text == "": self.text = self.ORIGINAL_TEXT # If the text is empty
-                self.color = self.UNACTIVE_COLOR
         
-        # This will alter the contents of the box
-        if event.type == pygame.KEYDOWN:
-            # This checks if the box is active
-            if self.color == self.ACTIVE_COLOR:
-                if event.key == pygame.K_BACKSPACE:
-                    self.text = self.text[:-1] # Removes that last index
-
-                elif event.key == pygame.K_RETURN:
-                    # If the user pressed return, we don't want anything to happen, 
-                    # since this is a login form
-                    pass 
-
-                # If anything else is pressed
-                else:
-                    # Checks if the box type is password
-                    if self.type == "password":
-                        self.text += "*" # Adds an astrisk, so password cannot be seen
-                    else:
-                        self.text += event.unicode
-
-
-        
-
-        
-
-# Child Draw Box, 
-# used for drawing characters
-
-class DrawBox(Box):
-    def handle_event(self, event):
-        pass

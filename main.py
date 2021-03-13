@@ -18,11 +18,13 @@ dependencies.settings.init()
 BG_COLOR = (255,255,255)
 LOGIN_DIMENSIONS = (400,600)
 CREATE_DIMENSIONS = (600,800)
-APP_DIMENSIONS = (1600,800)
+APP_DIMENSIONS = (1200,800)
 
 # Global Variables
 
-logged_in = False
+login_form = True
+create_account_form = False
+app_form = False
 screen = pygame.display.set_mode(LOGIN_DIMENSIONS) # Initial state of screen for login
 
 # Login Method Container Class
@@ -72,6 +74,7 @@ class LoginContainer:
 
     @classmethod
     def run_event_handler(cls, event):
+
          # Sends the event handler the event
         cls.password_login_box.handle_event(event)
         cls.username_login_box.handle_event(event)
@@ -82,26 +85,43 @@ class LoginContainer:
             cls.password_login_box.get_text()
         )
 
+class CreateAccountContainer:
+    pass
+
+class AppContainer:
+    pass
+
 # Main Script
 
 def main():
-    if not logged_in:
+    if login_form:
         LoginContainer.setup_login()
         LoginContainer.draw_login()
         pygame.display.flip()
+    while True:
 
-    while not logged_in:
-        # Loops through a list of events
-        for event in pygame.event.get():
-            # If the page is closed
-            if event.type == pygame.QUIT:
-                sys.exit()
-            if not logged_in:
-                LoginContainer.run_event_handler(event)
+        # If the user is on the login form (True by default)
+        if login_form:
+            # Loops through a list of events
+            for event in pygame.event.get():
+                # If the page is closed
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                else:
+                    LoginContainer.run_event_handler(event)
 
-        LoginContainer.run_login()
-        LoginContainer.draw_login_text()
-        pygame.display.flip()
+            LoginContainer.run_login()
+            LoginContainer.draw_login_text()
+            pygame.display.flip()
+
+        # If the user is on the create account form
+        elif create_account_form:
+            screen = pygame.display.set_mode(CREATE_DIMENSIONS)
+
+        # If the user is on the main app form
+        elif app_form:
+            screen = pygame.display.set_mode(APP_DIMENSIONS)
+        
 
 
 if __name__ == '__main__':

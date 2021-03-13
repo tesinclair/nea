@@ -150,12 +150,14 @@ class EnglishInputBox(Box):
 
                 # If anything else is pressed
                 else:
+                    print("here")
                     # Checks if the box type is password
                     if self.type == "password":
                         self.text += "*" # Adds an astrisk, so password cannot be seen
                         self.box_contents += event.unicode
                     else:
                         self.text += event.unicode
+                        print("here")
                         self.box_contents += event.unicode
         
 

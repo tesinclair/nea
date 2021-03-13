@@ -113,7 +113,7 @@ class LoginButton(Button):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.color == self.ACTIVE_COLOR:
                 # Runs a backend script which handles the database work
-                backend.ButtonOnclickHandlers.login_button_backend_handler(username, password)
+                print(backend.ButtonOnclickHandlers.login_button_backend_handler(username, password))
                 
 class CreateAccountButton(Button):
     def handle_event(self, event):

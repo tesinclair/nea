@@ -4,6 +4,7 @@ import os
 
 # Local Package Imports
 import dependencies
+import backend
 
 # Initialization of settings
 
@@ -110,8 +111,28 @@ class JapaneseInputBox(Box):
     the only efficient solution.
     '''
 
-    def handle_event(self, event):
-        pass
+    # Private Variables
+
+    self.typed = []
+
+
+    def handle_event(self, event, user, contact):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                self.active = True
+                self.colour = self.colour_active
+            else:
+                self.active = False
+                self.colour = self.colour_inactive
+
+        if event.type == pygame.KEYDOWN:
+            if self.active:
+                if event.key == pygame.K_RETURN:
+                    try:
+                        backend.SendMessageHandler.send_message(self.box_contents, user.get_username(), contact)
+                    except TypeError as e: # If there is no instance of user this will throw a type error
+                        print(e)
+
 
 # Child Input Box, 
 # used for User Inputs In English

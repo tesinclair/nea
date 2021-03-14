@@ -142,3 +142,7 @@ class CreateAccountButton(Button):
                     return user
                 else:
                     pass
+
+class EnterButton(Button):
+    def handle_event(self, event):
+        self.onHoverCheck(event)

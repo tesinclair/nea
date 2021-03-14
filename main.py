@@ -23,10 +23,11 @@ APP_DIMENSIONS = (1200,800)
 # Global Variables
 
 login_form = False
-create_account_form = False
-app_form = True
+create_account_form = True
+app_form = False
 screen = pygame.display.set_mode(LOGIN_DIMENSIONS) # Initial state of screen for login
-user = None
+user = frontend.UserData.User("test", "6", "testF", "testS")
+contact = frontend.UserData.User("test_cont", "3", "testF", "testS")
 
 # Login Method Container Class
 class LoginContainer:
@@ -37,11 +38,13 @@ class LoginContainer:
 
         # Calls a setup function
         cls.username_login_box, cls.password_login_box, cls.button_login, cls.button_create_account_form = frontend.InstantiateFrontend.setup_login(screen, LOGIN_DIMENSIONS)
+        cls.draw_login()
+        pygame.display.flip()
 
     @classmethod
     def draw_login_text(cls):
         # Creates a font
-        FONT_TEXTBOX = pygame.font.Font(os.getenv("FONT_PATH"), 30)
+        FONT_TEXTBOX = pygame.font.Font("dependencies/chrysuni.ttf", 30)
 
         # Adds text to screen
         screen.blit((
@@ -82,6 +85,7 @@ class LoginContainer:
         if cls.button_create_account_form.handle_event(event):
             login_form = False
             create_account_form = True
+            CreateAccountContainer.setup_create_account()
 
         if cls.button_login.handle_event(
             event, 
@@ -96,6 +100,7 @@ class LoginContainer:
             )
             login_form = False
             app_form = True
+            AppContainer.setup_app()
 
 
 class CreateAccountContainer:
@@ -103,7 +108,9 @@ class CreateAccountContainer:
     def setup_create_account(cls):
 
         # Calls a setup function
-        cls.username_box, cls.password_box, cls.first_name_box, cls.last_name_box, cls.button_create_account = frontend.InstantiateFrontend.setup_create_account(screen, LOGIN_DIMENSIONS)
+        cls.username_box, cls.password_box, cls.first_name_box, cls.last_name_box, cls.button_create_account = frontend.InstantiateFrontend.setup_create_account(screen, CREATE_DIMENSIONS)
+        cls.draw_create()
+        pygame.display.flip()
 
     @classmethod
     def draw_create_text(cls):
@@ -163,14 +170,17 @@ class CreateAccountContainer:
             )
             create_account_form = False
             app_form = True
+            AppContainer.setup_app()
         
 
 class AppContainer:
     @classmethod
-    def setup_create_account(cls):
+    def setup_app(cls):
 
         # Calls a setup function
-        cls.username_box, cls.password_box, cls.first_name_box, cls.last_name_box, cls.button_create_account = frontend.InstantiateFrontend.setup_create_account(screen, LOGIN_DIMENSIONS)
+        cls.message_display_box, cls.search_box, cls.message_send_box, cls.draw_box, cls.draw_box_enter_button, cls.search_result_box = frontend.InstantiateFrontend.setup_app(screen, APP_DIMENSIONS)
+        cls.draw_app()
+        pygame.display.flip()
 
     @classmethod
     def draw_app_text(cls):
@@ -180,11 +190,11 @@ class AppContainer:
         # Adds text to screen
         screen.blit((
             FONT_TEXTBOX.render(
-                "", 
+                contact.get_username(), 
                 True, 
                 (0,0,100),
                 (255,255,255) 
-            )), (math.floor(LOGIN_DIMENSIONS[0]/2) + 20, math.floor(LOGIN_DIMENSIONS[1]/6))
+            )), (math.floor(APP_DIMENSIONS[0]/3) + 10, 20)
         )
         screen.blit((
             FONT_TEXTBOX.render(
@@ -192,70 +202,51 @@ class AppContainer:
                 True, 
                 (0,0,100),
                 (255,255,255) 
-            )), (math.floor(LOGIN_DIMENSIONS[0]/2) + 20, math.floor(LOGIN_DIMENSIONS[1]/6))
+            )), (math.floor(5*APP_DIMENSIONS[0]/6) + 20, 70)
         )
     
     @classmethod
-    def draw_create(cls):    
-        cls.username_box.draw()
-        cls.password_box.draw()
-        cls.first_name_box.draw()
-        cls.last_name_box.draw()
-        cls.button_create_account.draw()
+    def draw_app(cls):    
+        cls.message_display_box.draw()
+        cls.search_box.draw()
+        cls.message_send_box.draw()
+        cls.draw_box.draw()
+        cls.draw_box_enter_button.draw()
+        cls.search_result_box.draw()
 
     @classmethod
-    def run_create(cls):
+    def run_app(cls):
         # Changes background color back to white (essentially clearing it)
         pygame.Surface.fill(screen, BG_COLOR)
-        cls.username_box.update()
-        cls.password_box.update()
-        cls.first_name_box.update()
-        cls.last_name_box.update()
-        cls.button_create_account.update()
+        cls.message_display_box.update()
+        cls.search_box.update()
+        cls.message_send_box.update()
+        cls.draw_box.update()
+        cls.draw_box_enter_button.update()
+        cls.search_result_box.update()
     
     @classmethod
     def run_event_handler(cls, event):
 
          # Sends the event handler the event
-        cls.username_box.handle_event(event)
-        cls.password_box.handle_event(event)
-        cls.first_name_box.handle_event(event)
-        cls.last_name_box.handle_event(event)
-        if cls.button_create_account.handle_event(
-            event, 
-            cls.username_box.get_text(),
-            cls.password_box.get_text(),
-            cls.first_name_box.get_text(),
-            cls.last_name_box.get_text()
-        ):
+        cls.search_box.handle_event(event)
+        cls.message_send_box.handle_event(event, user, contact)
+        cls.draw_box.handle_event(event)
+        cls.draw_box_enter_button.handle_event(event)
+        cls.message_display_box.handle_event(event)
 
-            user = cls.button_create_account.handle_event(
-            event, 
-            cls.username_box.get_text(),
-            cls.password_box.get_text(),
-            cls.first_name_box.get_text(),
-            cls.last_name_box.get_text()
-            )
-            create_account_form = False
-            app_form = True
 
 # Main Script
 
 def main():
     if login_form:
         LoginContainer.setup_login()
-        LoginContainer.draw_login()
-        pygame.display.flip()
     
     elif create_account_form:
         CreateAccountContainer.setup_create_account()
-        CreateAccountContainer.draw_create()
-        pygame.display.flip()
 
     elif app_form:
-        AppContainer.setup_login()
-        AppContainer.draw_login()
-        pygame.display.flip()
+        AppContainer.setup_app()
 
     while True:
 
@@ -300,10 +291,10 @@ def main():
                 if event.type == pygame.QUIT:
                     sys.exit()
                 else:
-                    LoginContainer.run_event_handler(event)
+                    AppContainer.run_event_handler(event)
 
-            LoginContainer.run_login()
-            LoginContainer.draw_login_text()
+            AppContainer.run_app()
+            AppContainer.draw_app_text()
             pygame.display.flip()
         
 

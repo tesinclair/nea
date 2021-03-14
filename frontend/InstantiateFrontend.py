@@ -84,7 +84,7 @@ def setup_create_account(screen, dim: tuple):
 
     username_box = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (math.floor(width/2), math.floor(height/3) + 120), 
+        (math.floor(width/3), math.floor(height/3) + 120), 
         (200,30), 
         text="Username..."
         )
@@ -93,7 +93,7 @@ def setup_create_account(screen, dim: tuple):
 
     password_box = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (math.floor(width/2), math.floor(height/3) + 180), 
+        (math.floor(width/3), math.floor(height/3) + 180), 
         (200,30), 
         text="Password...",
         box_type="password"
@@ -103,7 +103,7 @@ def setup_create_account(screen, dim: tuple):
 
     first_name_box = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (math.floor(width/2), math.floor(height/3)), 
+        (math.floor(width/3), math.floor(height/3)), 
         (200,30), 
         text="First Name..."
         )
@@ -112,7 +112,7 @@ def setup_create_account(screen, dim: tuple):
 
     last_name_box = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (math.floor(width/2), math.floor(height/3) + 60), 
+        (math.floor(width/3), math.floor(height/3) + 60), 
         (200,30), 
         text="Last Name"
         )
@@ -122,7 +122,7 @@ def setup_create_account(screen, dim: tuple):
 
     button_create_account = frontend.ButtonDesigns.CreateAccountButton(
         screen, 
-        (math.floor(width/2) + 20, math.floor(5*height/6)),
+        (math.floor(width/3) + 20, math.floor(5*height/6)),
         (145,30),
         text="Create Account"
     )
@@ -144,15 +144,15 @@ def setup_app(screen, dim: tuple):
 
     message_display_box = frontend.BoxDesigns.MessageBox(
         screen, 
-        (math.floor(width/2), math.floor(height/3) + 120), 
-        (200,30) 
+        (5, 5), 
+        (math.floor(4*width/5),math.floor(3*height/4)) 
         )
 
     # Contact Search Box
 
     search_box = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (math.floor(width/2), math.floor(height/3) + 180), 
+        (math.floor(4*width/5) + 20, 180), 
         (200,30), 
         text="Search... "
         )
@@ -161,8 +161,8 @@ def setup_app(screen, dim: tuple):
 
     message_send_box = frontend.BoxDesigns.JapaneseInputBox(
         screen, 
-        (math.floor(width/2), math.floor(height/3)), 
-        (200,30), 
+        (5, math.floor(3*height/4) + 10), 
+        (math.floor(4*width/5), 30), 
         text="Message..."
         )
     
@@ -170,8 +170,8 @@ def setup_app(screen, dim: tuple):
 
     draw_box = frontend.BoxDesigns.DrawBox(
         screen, 
-        (math.floor(width/2), math.floor(height/3) + 60), 
-        (200,30)
+        (math.floor(width/3), math.floor(3*height/4) + 45), 
+        (150,150)
         )
 
 
@@ -179,11 +179,19 @@ def setup_app(screen, dim: tuple):
 
     draw_box_enter_button = frontend.ButtonDesigns.EnterButton(
         screen, 
-        (math.floor(width/2) + 20, math.floor(5*height/6)),
-        (145,30),
-        text="Create Account"
+        (math.floor(width/2) - 45, math.floor(9*height/10) + 45),
+        (80,30),
+        text="Enter"
+    )
+
+    # Contact Display Box
+
+    search_result_box = frontend.BoxDesigns.Box(
+        screen, 
+        (math.floor(4*width/5) + 15, 170), 
+        (210,math.floor(4*height/5) - 20)
     )
     
     # Returns the instances
 
-    return username_box, password_box, first_name_box, last_name_box, button_create_account
+    return message_display_box, search_box, message_send_box, draw_box, draw_box_enter_button, search_result_box

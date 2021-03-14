@@ -4,6 +4,7 @@ import os
 
 # Local Package Imports
 import dependencies
+import backend
 
 # Initialization of settings
 
@@ -22,10 +23,10 @@ class Box(object):
 
     # Local Box Variables
 
-    TEXT_SIZE = 25 # Denotes the text size
+    TEXT_SIZE = 15 # Denotes the text size
 
     # This creates a font which can be used to blit text to the screen
-    BOX_FONT_TEXTBOX = pygame.font.Font(os.getenv("FONT_PATH"), TEXT_SIZE)
+    BOX_FONT_TEXTBOX = pygame.font.Font("dependencies/chrysuni.ttf", TEXT_SIZE)
 
     def __init__(self, screen, pos: tuple, dim: tuple, text=""):
        
@@ -102,16 +103,64 @@ class Box(object):
 # used for User Inputs In Japanese
 
 class JapaneseInputBox(Box):
+    def __init__(self, screen, pos: tuple, dim: tuple, text=""):
+        super().__init__(screen, pos, dim, text=text)
 
+        # Variables
+        self.to_transliterate = "" # Should hole a maximum of 3 characters to transliterate
+         
+    
     '''
+
     While event handling isn't strictly frontend, 
     this directly effects the frontend in such a 
     way that encorparating it into the frontend was
     the only efficient solution.
     '''
 
-    def handle_event(self, event):
-        pass
+    def handle_event(self, event, user, contact):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                if self.text == self.ORIGINAL_TEXT: self.text = ""  # If the text is original
+                self.color = self.ACTIVE_COLOR
+            else:
+                if self.text == "": self.text = self.ORIGINAL_TEXT # If the text is empty
+                self.color = self.UNACTIVE_COLOR
+
+        if event.type == pygame.KEYDOWN:
+
+            if self.color == self.ACTIVE_COLOR:
+
+                if event.key == pygame.K_RETURN:
+                    try:
+                        backend.SendMessageHandler.send_message(self.box_contents, user.get_username(), contact.get_username())
+                    except TypeError as e: # If there is no instance of user this will throw a type error
+                        print(e)
+
+                if event.key == pygame.K_BACKSPACE:
+                    self.text = self.text[:-1] # Removes that last index
+                    self.box_contents = self.box_contents[:-1]
+
+                else:
+
+                    '''
+                    Here we need to check whether the typed character can be transliterated
+                    If it can we should transliterate it, then remove characters from the list
+                    '''
+                    self.to_transliterate += event.unicode # Add letter to to_transliterate
+                    self.text += event.unicode 
+                    self.box_contents += event.unicode
+
+                    transliterated = backend.HiraganaConversion.transliterate(self.to_transliterate) # returned value (text or None)
+                    if transliterated: # if not none
+                        self.text = self.text[:-len(self.to_transliterate)] # Remove the characters from to_transliterate
+                        self.box_contents = self.box_contents[:-len(self.to_transliterate)]
+                        self.to_transliterate = "" # resets teh to transliterate
+
+                        self.text += transliterated # Add transliterated character
+                        self.box_contents += transliterated
+
+
 
 # Child Input Box, 
 # used for User Inputs In English

@@ -41,19 +41,19 @@ def create_tables():
         f_name varchar(15) NOT NULL,
         s_name varchar(20) NOT NULL,
         pass varchar(100) NOT NULL,
-        username varchar(20) NOT NULL
+        username varchar(20) NOT NULL UNIQUE
     ); 
     """ # SQL query to create the user table
 
     setup_command_message = r""" 
     CREATE TABLE IF NOT EXISTS messages(
         message_id integer PRIMARY KEY AUTOINCREMENT,
-        sender_id integer,
-        receiver_id integer,
+        sender_username varchar(20),
+        contact_username varchar(20),
         message text NOT NULL,
-        message_date date,
-        FOREIGN KEY (sender_id) REFERENCES users (id),
-        FOREIGN KEY (receiver_id) REFERENCES users (id)
+        message_date datetime default current_timestamp,
+        FOREIGN KEY (sender_username) REFERENCES users (username),
+        FOREIGN KEY (contact_username) REFERENCES users (username)
     );
     """ # SQL query to create the messages table
 
@@ -70,11 +70,12 @@ def create_tables():
 # execute_command(CONN, command)
 
 
-# def add_message(message: str, user_id: str, recipient_id: str):
-#     command = f"""
-#     INSERT INTO 'messages' (sender_id, receiver_id, message)
-#     VALUES('{user_id}', '{recipient_id}', '{message}');"""
-#     execute_command(CONN, command)
+def add_message(message: str, username: str, contact: str):
+    command = r"""
+    INSERT INTO `messages` (`sender_username`, `contact_username`, message)
+    VALUES(?, ?, ?);
+    """
+    execute_command(command, [username, contact, message])
 
 
 def create_account(f_name, s_name, password, username):

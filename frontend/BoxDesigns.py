@@ -5,6 +5,7 @@ import os
 # Local Package Imports
 import dependencies
 import backend
+import frontend
 
 # Initialization of settings
 
@@ -203,6 +204,21 @@ class EnglishInputBox(Box):
                     if self.type == "password":
                         self.text += "*" # Adds an astrisk, so password cannot be seen
                         self.box_contents += event.unicode
+                    elif self.type == "search":
+                        self.text += event.unicode
+                        self.box_contents += event.unicode
+                        results = backend.FrontendHandlers.searchfor(self.box_contents) # searches for similar names
+                        if results: # if a value was returned
+                            for result in results: # for each one that is returned
+                                for value in range(len(results)): # used for increasing the distance between them
+                                    # return a button instance
+                                    yield frontend.ButtonDesigns.UserButton(
+                                        self.screen, 
+                                        (4*self.width/5 + 20, 180 + value * 20), 
+                                        (200, 30), 
+                                        text=result[4] # The 4th element in the returned array (the username)
+                                        )       
+
                     else:
                         self.text += event.unicode
                         self.box_contents += event.unicode

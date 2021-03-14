@@ -125,6 +125,12 @@ def get_name(username):
     s_name = execute_command(command_s_name, [username])
     return f_name, s_name
 
+def search(text):
+    command = '''
+    SELECT * FROM `users` WHERE `username` LIKE ?
+    '''
+    return execute_command(command, ['%'+text+'%']) # using sql wildcard % to return all usernames like this
+
 def hash_pass(password: str):
     return hashlib.sha224(password.encode("UTF-8")).hexdigest()
 

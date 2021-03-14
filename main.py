@@ -23,9 +23,10 @@ APP_DIMENSIONS = (1200,800)
 # Global Variables
 
 login_form = False
-create_account_form = True
-app_form = False
+create_account_form = False
+app_form = True
 screen = pygame.display.set_mode(LOGIN_DIMENSIONS) # Initial state of screen for login
+user = None
 
 # Login Method Container Class
 class LoginContainer:
@@ -166,11 +167,77 @@ class CreateAccountContainer:
 
 class AppContainer:
     @classmethod
-    def setup_app(cls):
+    def setup_create_account(cls):
 
         # Calls a setup function
-        cls.username_login_box, cls.password_login_box, cls.button_login, cls.button_create_account = frontend.InstantiateFrontend.setup_login(screen, LOGIN_DIMENSIONS)
+        cls.username_box, cls.password_box, cls.first_name_box, cls.last_name_box, cls.button_create_account = frontend.InstantiateFrontend.setup_create_account(screen, LOGIN_DIMENSIONS)
 
+    @classmethod
+    def draw_app_text(cls):
+        # Creates a font
+        FONT_TEXTBOX = pygame.font.Font(os.getenv("FONT_PATH"), 30)
+
+        # Adds text to screen
+        screen.blit((
+            FONT_TEXTBOX.render(
+                "", 
+                True, 
+                (0,0,100),
+                (255,255,255) 
+            )), (math.floor(LOGIN_DIMENSIONS[0]/2) + 20, math.floor(LOGIN_DIMENSIONS[1]/6))
+        )
+        screen.blit((
+            FONT_TEXTBOX.render(
+                user.get_username(), 
+                True, 
+                (0,0,100),
+                (255,255,255) 
+            )), (math.floor(LOGIN_DIMENSIONS[0]/2) + 20, math.floor(LOGIN_DIMENSIONS[1]/6))
+        )
+    
+    @classmethod
+    def draw_create(cls):    
+        cls.username_box.draw()
+        cls.password_box.draw()
+        cls.first_name_box.draw()
+        cls.last_name_box.draw()
+        cls.button_create_account.draw()
+
+    @classmethod
+    def run_create(cls):
+        # Changes background color back to white (essentially clearing it)
+        pygame.Surface.fill(screen, BG_COLOR)
+        cls.username_box.update()
+        cls.password_box.update()
+        cls.first_name_box.update()
+        cls.last_name_box.update()
+        cls.button_create_account.update()
+    
+    @classmethod
+    def run_event_handler(cls, event):
+
+         # Sends the event handler the event
+        cls.username_box.handle_event(event)
+        cls.password_box.handle_event(event)
+        cls.first_name_box.handle_event(event)
+        cls.last_name_box.handle_event(event)
+        if cls.button_create_account.handle_event(
+            event, 
+            cls.username_box.get_text(),
+            cls.password_box.get_text(),
+            cls.first_name_box.get_text(),
+            cls.last_name_box.get_text()
+        ):
+
+            user = cls.button_create_account.handle_event(
+            event, 
+            cls.username_box.get_text(),
+            cls.password_box.get_text(),
+            cls.first_name_box.get_text(),
+            cls.last_name_box.get_text()
+            )
+            create_account_form = False
+            app_form = True
 
 # Main Script
 

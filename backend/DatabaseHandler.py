@@ -21,6 +21,9 @@ dependencies.settings.init()
 CONN = sqlite3.connect("./nea_database.db") # Establishes connection with database
 CURSOR = CONN.cursor()
 
+# Variables
+user = None
+
 def execute_command(command, data=[]):
     try:
         result = CURSOR.execute(command, data).fetchall()
@@ -84,9 +87,9 @@ def create_account(f_name, s_name, password, username):
 
 def get_exists(username):
     command = r"""
-    SELECT `username` FROM `users` WHERE `username` = ?;
-    """
-    result = execute_command(command, [username])
+    SELECT `username` FROM `users` WHERE `username` = ?; 
+    """ # Sqlite3 variable management - question mark to be filled in by data
+    result = execute_command(command, [username]) # passes through command, and the data
     if result:
         return True
     else:

@@ -165,3 +165,7 @@ class EnglishInputBox(Box):
 class DrawBox(Box):
     def handle_event(self, event):
         pass
+
+class MessageBox(Box):
+    def handle_event(self, event):
+        pass

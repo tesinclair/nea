@@ -1,2 +1,4 @@
+import backend
+
 def send_message(message, user, contact):
-    pass
+    backend.DatabaseHandler.add_message(message, user, contact)

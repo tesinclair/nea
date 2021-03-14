@@ -27,6 +27,7 @@ create_account_form = False
 app_form = True
 screen = pygame.display.set_mode(LOGIN_DIMENSIONS) # Initial state of screen for login
 user = None
+contact = None
 
 # Login Method Container Class
 class LoginContainer:
@@ -230,7 +231,7 @@ class AppContainer:
 
          # Sends the event handler the event
         cls.search_box.handle_event(event)
-        cls.message_send_box.handle_event(event)
+        cls.message_send_box.handle_event(event, user, contact)
         cls.draw_box.handle_event(event)
         cls.draw_box_enter_button.handle_event(event)
         cls.message_display_box.handle_event(event)

@@ -113,25 +113,45 @@ class JapaneseInputBox(Box):
 
     # Private Variables
 
-    self.typed = []
+    typed = []
 
 
     def handle_event(self, event, user, contact):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.rect.collidepoint(event.pos):
-                self.active = True
-                self.colour = self.colour_active
+                self.colour = self.ACTIVE_COLOR
             else:
-                self.active = False
-                self.colour = self.colour_inactive
+                self.colour = self.UNACTIVE_COLOR
 
         if event.type == pygame.KEYDOWN:
-            if self.active:
+
+            if self.color == self.ACTIVE_COLOR:
+
                 if event.key == pygame.K_RETURN:
                     try:
                         backend.SendMessageHandler.send_message(self.box_contents, user.get_username(), contact)
                     except TypeError as e: # If there is no instance of user this will throw a type error
                         print(e)
+
+                if event.key == pygame.K_BACKSPACE:
+                    try:
+                        self.text = self.text[:-1] # Removes that last index
+                        self.box_contents = self.box_contents[:-1]
+                        typed.pop()
+                    except IndexError as e: # If there was nothing typed
+                        print(e)
+
+                else:
+
+                    '''
+                    Here we need to check whether the typed character can be transliterated
+                    If it can we should transliterate it, then remove characters from the list
+                    '''
+
+                    self.text += event.unicode
+                    self.box_contents += event.unicode
+                    typed.append(event.unicode)
+
 
 
 # Child Input Box, 

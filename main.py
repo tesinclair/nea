@@ -23,11 +23,11 @@ APP_DIMENSIONS = (1200,800)
 # Global Variables
 
 login_form = False
-create_account_form = True
-app_form = False
+create_account_form = False
+app_form = True
 screen = pygame.display.set_mode(LOGIN_DIMENSIONS) # Initial state of screen for login
-user = frontend.UserData.User("test", "6", "testF", "testS")
-contact = frontend.UserData.User("test_cont", "3", "testF", "testS")
+user = frontend.UserData.User("username_test", "1", "f_name", "s_name")
+contact = frontend.UserData.User("username_test_2", "2", "f_name", "s_name")
 
 # Login Method Container Class
 class LoginContainer:
@@ -176,6 +176,8 @@ class CreateAccountContainer:
 class AppContainer:
     @classmethod
     def setup_app(cls):
+        # Variable Setup
+        cls.search_results = []
 
         # Calls a setup function
         cls.message_display_box, cls.search_box, cls.message_send_box, cls.draw_box, cls.draw_box_enter_button, cls.search_result_box = frontend.InstantiateFrontend.setup_app(screen, APP_DIMENSIONS)
@@ -216,24 +218,43 @@ class AppContainer:
 
     @classmethod
     def run_app(cls):
+
         # Changes background color back to white (essentially clearing it)
         pygame.Surface.fill(screen, BG_COLOR)
+
         cls.message_display_box.update()
         cls.search_box.update()
         cls.message_send_box.update()
         cls.draw_box.update()
         cls.draw_box_enter_button.update()
         cls.search_result_box.update()
+
+        for result in cls.search_results:
+            print(result)
+            result.update()
     
     @classmethod
     def run_event_handler(cls, event):
 
-         # Sends the event handler the event
-        cls.search_box.handle_event(event)
+        # Sends the event handler the event
+        results = [result for result in cls.search_box.handle_event(event)]
+        if len(results) > 0:
+            for result in results:
+                result.draw() # calls the initial call function as previous call has already happened
+                if result not in cls.search_results:
+                    cls.search_results.append(result)
+
+            for result in cls.search_results:
+                if result not in results:
+                    cls.search_results.pop(cls.search_results.index(result))
+
         cls.message_send_box.handle_event(event, user, contact)
         cls.draw_box.handle_event(event)
         cls.draw_box_enter_button.handle_event(event)
         cls.message_display_box.handle_event(event)
+
+        for result in cls.search_results:
+            result.handle_event(event)
 
 
 # Main Script

@@ -154,7 +154,8 @@ def setup_app(screen, dim: tuple):
         screen, 
         (math.floor(4*width/5) + 20, 180), 
         (200,30), 
-        text="Search... "
+        text="Search... ",
+        box_type="search"
         )
     
     # Send Message Box

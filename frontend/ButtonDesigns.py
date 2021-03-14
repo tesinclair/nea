@@ -114,7 +114,7 @@ class LoginButton(Button):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.color == self.ACTIVE_COLOR:
                 # Runs a backend script which handles the database work
-                if backend.ButtonOnclickHandlers.login_button_backend_handler(username, password):
+                if backend.FrontendHandlers.login_button_backend_handler(username, password):
                     user_id = backend.DatabaseHandler.get_id(username)[0][0]
                     f_name, s_name = backend.DatabaseHandler.get_name(username)
                     user = frontend.UserData.User(username, user_id, f_name[0][0], s_name[0][0])
@@ -135,7 +135,7 @@ class CreateAccountButton(Button):
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.color == self.ACTIVE_COLOR:
-                if backend.ButtonOnclickHandlers.create_account_backend_handler(username, password, f_name, s_name):
+                if backend.FrontendHandlers.create_account_backend_handler(username, password, f_name, s_name):
                     user_id = backend.DatabaseHandler.get_id(username)[0][0]
                     f_name, s_name = backend.DatabaseHandler.get_name(username)
                     user = frontend.UserData.User(username, user_id, f_name[0][0], s_name[0][0])
@@ -144,5 +144,9 @@ class CreateAccountButton(Button):
                     pass
 
 class EnterButton(Button):
+    def handle_event(self, event):
+        self.onHoverCheck(event)
+
+class UserButton(Button):
     def handle_event(self, event):
         self.onHoverCheck(event)

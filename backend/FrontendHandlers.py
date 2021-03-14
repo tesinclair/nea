@@ -1,7 +1,6 @@
 # External Imports
 
 # Local Imports
-# External Imports
 import backend
 
 
@@ -20,3 +19,6 @@ def create_account_backend_handler(username, password, f_name, s_name):
     else:
         backend.DatabaseHandler.create_account(f_name, s_name, password, username)
         return True
+
+def searchfor(text):
+    return backend.DatabaseHandler.search(text)

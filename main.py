@@ -145,7 +145,23 @@ class CreateAccountContainer:
         cls.password_box.handle_event(event)
         cls.first_name_box.handle_event(event)
         cls.last_name_box.handle_event(event)
-        cls.button_create_account.handle_event(event)
+        if cls.button_create_account.handle_event(
+            event, 
+            cls.username_box.get_text(),
+            cls.password_box.get_text(),
+            cls.first_name_box.get_text(),
+            cls.last_name_box.get_text()
+        ):
+
+            user = cls.button_create_account.handle_event(
+            event, 
+            cls.username_box.get_text(),
+            cls.password_box.get_text(),
+            cls.first_name_box.get_text(),
+            cls.last_name_box.get_text()
+            )
+            create_account_form = False
+            app_form = True
         
 
 class AppContainer:

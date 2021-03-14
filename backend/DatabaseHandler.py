@@ -51,7 +51,7 @@ def create_tables():
         sender_username varchar(20),
         contact_username varchar(20),
         message text NOT NULL,
-        message_date datetime NOT NULL,
+        message_date datetime default current_timestamp,
         FOREIGN KEY (sender_username) REFERENCES users (username),
         FOREIGN KEY (contact_username) REFERENCES users (username)
     );

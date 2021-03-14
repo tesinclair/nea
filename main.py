@@ -44,7 +44,7 @@ class LoginContainer:
     @classmethod
     def draw_login_text(cls):
         # Creates a font
-        FONT_TEXTBOX = pygame.font.Font(os.getenv("FONT_PATH"), 30)
+        FONT_TEXTBOX = pygame.font.Font("dependencies/chrysuni.ttf", 30)
 
         # Adds text to screen
         screen.blit((

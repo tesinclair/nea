@@ -1,23 +1,13 @@
-def can_transliterate(text):
-    def compare(letter):
-        vowels = ["a", "e", "i", "o", "u"]
-        legal_consonants = ["b", "c", "d", "f", "g", "h", "j", "k", "m", "n", "p", "r", "s", "t", "w", "y", "z"]
-
-        for x in vowels:
-            if x == letter:
-                return "Vowel"
-
-        for x in legal_consonants:
-            if x == letter:
-                return "Consonant"
-    
-    
 
 
 def transliterate(text):
-    if can_transliterate(text):
+   # While text shouldn't be more than 3 if there is not a transliterateable set in the first three, 
+   # it will keep going unity there is
+    while len(text) > 3: 
+        text = text[1:] # removes the first letter
 
-        hiragana = {"a": "あ", "i": "い", "u": "う", "e": "え", "o": "お",
+    # Private Constants
+    HIRAGANA = {"a": "あ", "i": "い", "u": "う", "e": "え", "o": "お",
                     "ka": "か", "ki": "き", "ku": "く", "ke": "け", "ko": "こ",
                     "sa": "さ", "shi": "し", "su": "す", "se": "せ", "so": "そ",
                     "ta": "た", "chi": "ち", "tsu": "つ", "te": "て", "to": "と",
@@ -33,7 +23,7 @@ def transliterate(text):
                     "ba": "ば", "bi": "び", "bu": "ぶ", "be": "べ", "bo": "ぼ",
                     "pa": "ぱ", "pi": "ぴ", "pu": "ぷ", "pe": "ぺ", "po": "ぽ",
                     "tte": "って", "tta": "った",
-                    "kya": "きゃ", "kyu": "きゅ", "kyo": "きょ",
+                    "kya": "きゃ", "kyu": "きゅ", "kyo": "きょ", 
                     "sha": "しゃ", "shu": "しゅ", "sho": "しょ",
                     "cha": "ちゃ", "chu": "ちゅ", "cho": "ちょ",
                     "nya": "にゃ", "nyu": "にゅ", "nyo": "にょ",
@@ -46,38 +36,30 @@ def transliterate(text):
                     "pya": "ぴゃ", "pyu": "ぴゅ", "pyo": "ぴょ"
                     }
 
-        vowels = ["a", "e", "i", "o", "u"]
-        legal_consonants = ["b", "c", "d", "f", "g", "h", "j", "k", "m", "n", "p", "r", "s", "t", "w", "y", "z"]
+    # Private Variables
 
-        chars = [char for char in text]
+    transliterated = ""
 
-        transliterated = ""
+    
+    if len(text) == 1:
+        for x in HIRAGANA:
+            if text == x:
+                transliterated = HIRAGANA[text]
+    
+                return transliterated
 
-        if len(chars) == 1:
-            for x in chars:
-                for y in vowels:
-                    if x == y:
-                        transliterated = hiragana[x]
+    elif len(text) == 2:
+        for x in HIRAGANA:
+            if text == x:
+                transliterated = HIRAGANA[text]
 
-        if len(chars) == 2:
-            for x in chars:
-                for y in legal_consonants:
-                    if x == y:
-                        for z in vowels:
-                            if chars[chars.index(x) + 1] == z:
-                                transliterated = hiragana[x + chars[chars.index(x) + 1]]
-                            elif chars[chars.index(x) + 1] == "n":
-                                transliterated = hiragana["n"]
+                return transliterated
 
-        elif len(chars) == 3:
-            for x in chars:
-                for y in legal_consonants:
-                    if x == y:
-                        for z in legal_consonants:
-                            if chars[chars.index(x) + 1] == z:
-                                for q in vowels:
-                                    if chars[chars.index(x) + 2] == q:
-                                        transliterated = hiragana[
-                                            x + chars[chars.index(x) + 1] + chars[chars.index(x) + 2]]
+    elif (text) ==3:
+        for x in HIRAGANA:
+            if text == x:
+                transliterated = HIRAGANA[text]
 
-        return transliterated
+                return transliterated
+
+    return None # If none of the if statements return anything, then return None

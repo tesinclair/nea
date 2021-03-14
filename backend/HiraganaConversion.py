@@ -42,6 +42,8 @@ def transliterate(text):
 
     
     if len(text) == 1:
+        if text == "n":
+            return None
         for x in HIRAGANA:
             if text == x:
                 transliterated = HIRAGANA[text]

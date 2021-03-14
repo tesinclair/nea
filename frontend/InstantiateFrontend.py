@@ -84,7 +84,7 @@ def setup_create_account(screen, dim: tuple):
 
     username_box = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (math.floor(width/2), math.floor(height/3) + 120), 
+        (math.floor(width/3), math.floor(height/3) + 120), 
         (200,30), 
         text="Username..."
         )
@@ -93,7 +93,7 @@ def setup_create_account(screen, dim: tuple):
 
     password_box = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (math.floor(width/2), math.floor(height/3) + 180), 
+        (math.floor(width/3), math.floor(height/3) + 180), 
         (200,30), 
         text="Password...",
         box_type="password"
@@ -103,7 +103,7 @@ def setup_create_account(screen, dim: tuple):
 
     first_name_box = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (math.floor(width/2), math.floor(height/3)), 
+        (math.floor(width/3), math.floor(height/3)), 
         (200,30), 
         text="First Name..."
         )
@@ -112,7 +112,7 @@ def setup_create_account(screen, dim: tuple):
 
     last_name_box = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (math.floor(width/2), math.floor(height/3) + 60), 
+        (math.floor(width/3), math.floor(height/3) + 60), 
         (200,30), 
         text="Last Name"
         )
@@ -122,7 +122,7 @@ def setup_create_account(screen, dim: tuple):
 
     button_create_account = frontend.ButtonDesigns.CreateAccountButton(
         screen, 
-        (math.floor(width/2) + 20, math.floor(5*height/6)),
+        (math.floor(width/3) + 20, math.floor(5*height/6)),
         (145,30),
         text="Create Account"
     )

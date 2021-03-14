@@ -29,7 +29,7 @@ class Button(object):
     
     # Local Box Variables
 
-    TEXT_SIZE = 25 # Denotes the text size
+    TEXT_SIZE = 15 # Denotes the text size
 
     # This creates a font which can be used to blit text to the screen
     BOX_FONT_TEXTBOX = pygame.font.Font("dependencies/chrysuni.ttf", TEXT_SIZE)

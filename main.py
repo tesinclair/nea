@@ -23,11 +23,11 @@ APP_DIMENSIONS = (1200,800)
 # Global Variables
 
 login_form = False
-create_account_form = False
-app_form = True
+create_account_form = True
+app_form = False
 screen = pygame.display.set_mode(LOGIN_DIMENSIONS) # Initial state of screen for login
-user = None
-contact = None
+user = frontend.UserData.User("test", "6", "testF", "testS")
+contact = frontend.UserData.User("test_cont", "3", "testF", "testS")
 
 # Login Method Container Class
 class LoginContainer:
@@ -190,7 +190,7 @@ class AppContainer:
         # Adds text to screen
         screen.blit((
             FONT_TEXTBOX.render(
-                "contact name", 
+                contact.get_username(), 
                 True, 
                 (0,0,100),
                 (255,255,255) 
@@ -198,8 +198,7 @@ class AppContainer:
         )
         screen.blit((
             FONT_TEXTBOX.render(
-                #user.get_username(), 
-                'username',
+                user.get_username(), 
                 True, 
                 (0,0,100),
                 (255,255,255) 

@@ -105,6 +105,8 @@ class Box(object):
 class JapaneseInputBox(Box):
     def __init__(self, screen, pos: tuple, dim: tuple, text=""):
         super().__init__(screen, pos, dim, text=text)
+
+        # Variables
         self.to_transliterate = "" # Should hole a maximum of 3 characters to transliterate
          
     
@@ -131,7 +133,7 @@ class JapaneseInputBox(Box):
 
                 if event.key == pygame.K_RETURN:
                     try:
-                        backend.SendMessageHandler.send_message(self.box_contents, user.get_username(), contact)
+                        backend.SendMessageHandler.send_message(self.box_contents, user.get_username(), contact.get_username())
                     except TypeError as e: # If there is no instance of user this will throw a type error
                         print(e)
 
@@ -146,18 +148,17 @@ class JapaneseInputBox(Box):
                     If it can we should transliterate it, then remove characters from the list
                     '''
                     self.to_transliterate += event.unicode # Add letter to to_transliterate
+                    self.text += event.unicode 
+                    self.box_contents += event.unicode
 
                     transliterated = backend.HiraganaConversion.transliterate(self.to_transliterate) # returned value (text or None)
                     if transliterated: # if not none
                         self.text = self.text[:-len(self.to_transliterate)] # Remove the characters from to_transliterate
                         self.box_contents = self.box_contents[:-len(self.to_transliterate)]
-                        self.to_transliterate = self.to_transliterate[:-len(self.to_transliterate)] # resets teh to transliterate
+                        self.to_transliterate = "" # resets teh to transliterate
 
                         self.text += transliterated # Add transliterated character
                         self.box_contents += transliterated
-                    else: # If the character couldn't be transliterateted
-                        self.text += event.unicode # Just show the roman letter
-                        self.box_contents += event.unicode
 
 
 

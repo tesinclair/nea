@@ -237,16 +237,11 @@ class AppContainer:
     def run_event_handler(cls, event):
 
         # Sends the event handler the event
+        cls.search_results = []
         results = [result for result in cls.search_box.handle_event(event)]
         if len(results) > 0:
             for result in results:
-                result.draw() # calls the initial call function as previous call has already happened
-                if result not in cls.search_results:
-                    cls.search_results.append(result)
-
-            for result in cls.search_results:
-                if result not in results:
-                    cls.search_results.pop(cls.search_results.index(result))
+                cls.search_results.append(result)
 
         cls.message_send_box.handle_event(event, user, contact)
         cls.draw_box.handle_event(event)

@@ -135,6 +135,9 @@ class JapaneseInputBox(Box):
                 if event.key == pygame.K_RETURN:
                     try:
                         backend.SendMessageHandler.send_message(self.box_contents, user.get_username(), contact.get_username())
+                        self.text = ""
+                        self.box_contents = ""
+                        self.to_transliterate = ""
                     except TypeError as e: # If there is no instance of user this will throw a type error
                         print(e)
 
@@ -228,8 +231,31 @@ class EnglishInputBox(Box):
 # used for drawing characters
 
 class DrawBox(Box):
+    def __init__(self, screen, pos: tuple, dim: tuple):
+        super().__init__(screen, pos, dim)
+        self.draw_rect = pygame.Rect(0, 0, 0, 0)
+        self.mouse_down = False
+        self.points = []
+
     def handle_event(self, event):
-        pass
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.mouse_down = True
+        if event.type == pygame.MOUSEBUTTONUP:
+            self.mouse_down = False
+        if event.type == pygame.MOUSEMOTION and self.mouse_down:
+            if self.rect.collidepoint(event.pos):
+                x, y = event.pos
+                self.draw_rect = pygame.Rect(x, y, 4, 4)
+                self.points.append([x, y])
+
+    def update(self):
+        super().update()
+        for point in self.points:
+            x, y = point
+            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(x, y, 2, 2), 2)
+
+    def reset(self):
+        self.points = []
 
 class MessageBox(Box):
     def handle_event(self, event):

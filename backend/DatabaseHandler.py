@@ -21,10 +21,14 @@ dependencies.settings.init()
 CONN = sqlite3.connect("./nea_database.db") # Establishes connection with database
 CURSOR = CONN.cursor()
 
+# Variables
+user = None
+
 def execute_command(command, data=[]):
     try:
-        if len(CURSOR.execute(command, data).fetchall()) > 0:
-            return CURSOR.execute(command, data).fetchall()
+        result = CURSOR.execute(command, data).fetchall()
+        if len(result) > 0: # If there is something returned
+            return result # Return that # Else, just run the command
     except Error as e: print(e) # If command cannot be executed, print why
 
 
@@ -73,19 +77,19 @@ def create_tables():
 #     execute_command(CONN, command)
 
 
-def add_account(f_name, s_name, password, username):
+def create_account(f_name, s_name, password, username):
     password_to_add = hash_pass(password)
     command = r"""
-    INSERT INTO `users` (f_name, s_name, pass, username)
-    values(?, ?, ?, ?);
+    INSERT INTO `users` (`f_name`, `s_name`, `pass`, `username`)
+    VALUES(?, ?, ?, ?);
     """
-    execute_command(command, [f_name, s_name, password, username])
+    execute_command(command, [f_name, s_name, password_to_add, username])
 
 def get_exists(username):
     command = r"""
-    SELECT `username` FROM `users` WHERE `username` = ?;
-    """
-    result = execute_command(command, [username])
+    SELECT `username` FROM `users` WHERE `username` = ?; 
+    """ # Sqlite3 variable management - question mark to be filled in by data
+    result = execute_command(command, [username]) # passes through command, and the data
     if result:
         return True
     else:

@@ -130,5 +130,15 @@ class CreateAccountFormButton(Button):
                 return True
 
 class CreateAccountButton(Button):
-    def handle_event(self, event):
+    def handle_event(self, event, username, password, f_name, s_name):
         self.onHoverCheck(event)
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.color == self.ACTIVE_COLOR:
+                if backend.ButtonOnclickHandlers.create_account_backend_handler(username, password, f_name, s_name):
+                    user_id = backend.DatabaseHandler.get_id(username)[0][0]
+                    f_name, s_name = backend.DatabaseHandler.get_name(username)
+                    user = frontend.UserData.User(username, user_id, f_name[0][0], s_name[0][0])
+                    return user
+                else:
+                    pass

@@ -60,7 +60,7 @@ def setup_login(screen, dim: tuple):
 
     # Create Account Button
 
-    button_create_account = frontend.ButtonDesigns.CreateAccountButton(
+    button_create_account_form = frontend.ButtonDesigns.CreateAccountFormButton(
         screen, 
         (math.floor(1*width/3) - 10, math.floor(5*height/6)),
         (145,30),
@@ -69,7 +69,7 @@ def setup_login(screen, dim: tuple):
     
     # Returns the instances
 
-    return username_box_login, password_box_login, button_login, button_create_account
+    return username_box_login, password_box_login, button_login, button_create_account_form
 
 # Instantiate All the Create account class variables
 
@@ -82,41 +82,108 @@ def setup_create_account(screen, dim: tuple):
 
     # Username Box
 
-    username_box_login = frontend.BoxDesigns.EnglishInputBox(
+    username_box = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (math.floor(width/4), math.floor(height/3)), 
+        (math.floor(width/2), math.floor(height/3) + 120), 
         (200,30), 
         text="Username..."
         )
 
     # Password Box
 
-    password_box_login = frontend.BoxDesigns.EnglishInputBox(
+    password_box = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (math.floor(width/4), math.floor(height/3) + 60), 
+        (math.floor(width/2), math.floor(height/3) + 180), 
         (200,30), 
         text="Password...",
         box_type="password"
         )
+    
+    # First Name Box
 
-    # Login Button
-
-    button_login = frontend.ButtonDesigns.LoginButton(
+    first_name_box = frontend.BoxDesigns.EnglishInputBox(
         screen, 
-        (math.floor(width/2) - 40, math.floor(5*height/9) - 20),
-        (60,30),
-        text="Login"
-    )
+        (math.floor(width/2), math.floor(height/3)), 
+        (200,30), 
+        text="First Name..."
+        )
+    
+    # Last Name Box
+
+    last_name_box = frontend.BoxDesigns.EnglishInputBox(
+        screen, 
+        (math.floor(width/2), math.floor(height/3) + 60), 
+        (200,30), 
+        text="Last Name"
+        )
+
 
     # Create Account Button
 
-    button_create_account = frontend.ButtonDesigns.CreateAccountFormButton(
+    button_create_account = frontend.ButtonDesigns.CreateAccountButton(
         screen, 
-        (math.floor(1*width/3) - 10, math.floor(5*height/6)),
+        (math.floor(width/2) + 20, math.floor(5*height/6)),
         (145,30),
         text="Create Account"
     )
     
     # Returns the instances
 
-    return username_box_login, password_box_login, button_login, button_create_account
+    return username_box, password_box, first_name_box, last_name_box, button_create_account
+
+# Instantiate All the Create account class variables
+
+def setup_app(screen, dim: tuple):
+
+    # Gets Dimensions
+
+    height = dim[1]
+    width = dim[0]
+
+    # Message Display Box
+
+    message_display_box = frontend.BoxDesigns.MessageBox(
+        screen, 
+        (math.floor(width/2), math.floor(height/3) + 120), 
+        (200,30) 
+        )
+
+    # Contact Search Box
+
+    search_box = frontend.BoxDesigns.EnglishInputBox(
+        screen, 
+        (math.floor(width/2), math.floor(height/3) + 180), 
+        (200,30), 
+        text="Search... "
+        )
+    
+    # Send Message Box
+
+    message_send_box = frontend.BoxDesigns.JapaneseInputBox(
+        screen, 
+        (math.floor(width/2), math.floor(height/3)), 
+        (200,30), 
+        text="Message..."
+        )
+    
+    # Draw Box
+
+    draw_box = frontend.BoxDesigns.DrawBox(
+        screen, 
+        (math.floor(width/2), math.floor(height/3) + 60), 
+        (200,30)
+        )
+
+
+    # Enter Button
+
+    draw_box_enter_button = frontend.ButtonDesigns.EnterButton(
+        screen, 
+        (math.floor(width/2) + 20, math.floor(5*height/6)),
+        (145,30),
+        text="Create Account"
+    )
+    
+    # Returns the instances
+
+    return username_box, password_box, first_name_box, last_name_box, button_create_account

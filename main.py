@@ -300,6 +300,7 @@ def main():
 
         # If the user is on the main app form
         elif app_form:
+            print("here")
             screen = pygame.display.set_mode(APP_DIMENSIONS)
 
             # Loops through a list of events

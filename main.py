@@ -27,7 +27,7 @@ create_account_form = False
 app_form = True
 screen = pygame.display.set_mode(LOGIN_DIMENSIONS) # Initial state of screen for login
 user = frontend.UserData.User("username_test", "1", "f_name", "s_name")
-contact = frontend.UserData.User("username_test_2", "2", "f_name", "s_name")
+contact = frontend.UserData.User("username_test_2")
 
 # Login Method Container Class
 class LoginContainer:

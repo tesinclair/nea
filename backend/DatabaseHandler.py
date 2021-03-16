@@ -65,9 +65,9 @@ def create_tables():
 # returns a list of messages between user and contact
 def get_messages(username, contact):
     command = f"""
-SELECT `message` FROM `messages` INNER JOIN `users` on  ;
+SELECT `message` FROM `messages` WHERE `sender_username` = ? AND `contact_username` = ?;
 """
-execute_command(command, data)
+execute_command(command, [username, contact])
 
 
 def add_message(message: str, username: str, contact: str):

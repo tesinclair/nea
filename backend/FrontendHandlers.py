@@ -22,3 +22,6 @@ def create_account_backend_handler(username, password, f_name, s_name):
 
 def searchfor(text):
     return backend.DatabaseHandler.search(text)
+
+def send_message(message, user, contact):
+    backend.DatabaseHandler.add_message(message, user, contact)

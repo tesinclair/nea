@@ -245,7 +245,7 @@ class AppContainer:
 
         cls.message_send_box.handle_event(event, user, contact)
         cls.draw_box.handle_event(event)
-        cls.draw_box_enter_button.handle_event(event)
+        cls.draw_box_enter_button.handle_event(event, cls.draw_box)
         cls.message_display_box.handle_event(event)
 
         for result in cls.search_results:

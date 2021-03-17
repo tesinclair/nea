@@ -144,9 +144,15 @@ class CreateAccountButton(Button):
                     return None
 
 class EnterButton(Button):
-    def handle_event(self, event):
+    def handle_event(self, event, enter_button_instance):
         self.onHoverCheck(event)
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                # character = backend.FrontendHandlers.enter_button_backend_handler()
+                enter_button_instance.reset()
+                # return character
 
 class UserButton(Button):
     def handle_event(self, event):
         self.onHoverCheck(event)
+        return None

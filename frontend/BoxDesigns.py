@@ -144,6 +144,7 @@ class JapaneseInputBox(Box):
                 if event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1] # Removes that last index
                     self.box_contents = self.box_contents[:-1]
+                    self.to_transliterate = self.to_transliterate[:-1]
 
                 else:
 

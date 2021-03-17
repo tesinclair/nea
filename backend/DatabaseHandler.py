@@ -67,7 +67,7 @@ def get_messages(username, contact):
     command = f"""
 SELECT `message` FROM `messages` WHERE `sender_username` = ? AND `contact_username` = ?;
 """
-execute_command(command, [username, contact])
+    execute_command(command, [username, contact])
 
 
 def add_message(message: str, username: str, contact: str):

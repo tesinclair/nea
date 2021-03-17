@@ -134,7 +134,7 @@ class JapaneseInputBox(Box):
 
                 if event.key == pygame.K_RETURN:
                     try:
-                        backend.SendMessageHandler.send_message(self.box_contents, user.get_username(), contact.get_username())
+                        backend.FrontendHandlers.send_message(self.box_contents, user.get_username(), contact.get_username())
                         self.text = ""
                         self.box_contents = ""
                         self.to_transliterate = ""

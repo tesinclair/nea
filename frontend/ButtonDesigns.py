@@ -141,7 +141,7 @@ class CreateAccountButton(Button):
                     user = frontend.UserData.User(username, user_id, f_name[0][0], s_name[0][0])
                     return user
                 else:
-                    pass
+                    return None
 
 class EnterButton(Button):
     def handle_event(self, event, enter_button_instance):

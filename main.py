@@ -153,6 +153,7 @@ class CreateAccountContainer:
         cls.password_box.handle_event(event)
         cls.first_name_box.handle_event(event)
         cls.last_name_box.handle_event(event)
+        # Somehow returns a value even if not true. Check references
         if cls.button_create_account.handle_event(
             event, 
             cls.username_box.get_text(),

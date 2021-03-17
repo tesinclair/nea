@@ -24,7 +24,8 @@ def create_account_backend_handler(username, password, f_name, s_name):
 
 def searchfor(text):
     return backend.DatabaseHandler.search(text)
-
+  
+  
 # def enter_button_backend_handler():
 #     with mss.mss() as sct:
 #         monitor_dim = {"top": 485, "left": 375, "width": 150, "height": 150} 
@@ -34,3 +35,6 @@ def searchfor(text):
 #         character = backend.OCR.image_to_text(c_out)
 #         os.remove(c_out)
 #         return character
+
+def send_message(message, user, contact):
+    backend.DatabaseHandler.add_message(message, user, contact)

@@ -27,7 +27,7 @@ create_account_form = False
 app_form = True
 screen = pygame.display.set_mode(LOGIN_DIMENSIONS) # Initial state of screen for login
 user = frontend.UserData.User("username_test", "1", "f_name", "s_name")
-contact = frontend.UserData.User("username_test_2", "2", "f_name", "s_name")
+contact = frontend.UserData.User("", "", "", "")
 
 # Login Method Container Class
 class LoginContainer:
@@ -80,8 +80,8 @@ class LoginContainer:
     def run_event_handler(cls, event):
 
          # Sends the event handler the event
-        cls.password_login_box.handle_event(event)
         cls.username_login_box.handle_event(event)
+        cls.password_login_box.handle_event(event)
         if cls.button_create_account_form.handle_event(event):
             login_form = False
             create_account_form = True

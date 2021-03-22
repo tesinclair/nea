@@ -129,10 +129,10 @@ class JapaneseInputBox(Box):
                 self.color = self.UNACTIVE_COLOR
 
         if event.type == pygame.KEYDOWN:
-
+            print(event.key)
             if self.color == self.ACTIVE_COLOR:
 
-                if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
                     try:
                         backend.FrontendHandlers.send_message(self.box_contents, user.get_username(), contact.get_username())
                         self.text = ""
